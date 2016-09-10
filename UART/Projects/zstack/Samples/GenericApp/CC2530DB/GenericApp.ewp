@@ -3195,10 +3195,22 @@
       <name>$PROJ_DIR$\AT_AF.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\AT_BIND.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\AT_BIND.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\AT_UART.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\AT_UART.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\AT_ZDO.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\AT_ZDO.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\Source\GenericApp.c</name>
@@ -3474,7 +3486,7 @@
       <name>$PROJ_DIR$\..\..\..\..\..\Components\mt\MT_NWK.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\COMPONENTS\mt\MT_RPC.h</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\Components\mt\MT_RPC.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\..\Components\mt\MT_SAPI.c</name>
@@ -3516,7 +3528,7 @@
       <name>$PROJ_DIR$\..\..\..\..\..\Components\mt\MT_ZDO.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\COMPONENTS\mt\MT_ZDO.h</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\Components\mt\MT_ZDO.h</name>
     </file>
   </group>
   <group>
@@ -3687,7 +3699,7 @@
       <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\zdo\ZDApp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\COMPONENTS\stack\zdo\ZDApp.h</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\zdo\ZDApp.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\zdo\ZDConfig.c</name>
@@ -3705,7 +3717,7 @@
       <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\zdo\ZDObject.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\COMPONENTS\stack\zdo\ZDObject.h</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\zdo\ZDObject.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\..\Components\stack\zdo\ZDProfile.c</name>
