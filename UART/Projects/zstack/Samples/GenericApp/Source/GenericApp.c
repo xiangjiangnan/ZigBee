@@ -65,10 +65,10 @@ void GenericApp_Init( byte task_id )
 {
   
   GenericApp_TaskID = task_id;
-  GenericApp_NwkState = DEV_INIT;
   
   AT_AF_init();
   AT_UART_init();
+  NLME_PermitJoiningRequest(0xff);
 }
 
 /*********************************************************************
@@ -96,7 +96,10 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
             switch ( MSGpkt->hdr.event )
             {
             case AF_INCOMING_MSG_CMD:
-                GenericApp_MessageMSGCB(MSGpkt);
+                GenericAF_MessageMSGCB( (afIncomingMSGPacket_t *)MSGpkt );
+                break;
+             case KEY_CHANGE:
+                GenericApp_HandleKeys( ((keyChange_t *)MSGpkt)->state, ((keyChange_t *)MSGpkt)->keys );
                 break;
             default:
                 break;
@@ -109,50 +112,24 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
     return 0;
 }
 
-/*********************************************************************
- * LOCAL FUNCTIONS
- */
-
-/*********************************************************************
- * @fn      GenericApp_MessageMSGCB
- *
- * @brief   Data message processor callback.  This function processes
- *          any incoming data - probably from other devices.  So, based
- *          on cluster ID, perform the intended action.
- *
- * @param   none
- *
- * @return  none
- */
-void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
-{
-  byte data ;
-     
-  switch ( pkt->clusterId )
-  {
-    case GENERICAPP_CLUSTERID:
-     data  = pkt->cmd.Data[0];    //osal_memcpy(&data, pkt->cmd.Data, 1);
-     
-     if(data == 0x10){
-       HalLedSet(HAL_LED_1, HAL_LED_ON); 
-     }
-     else if(data == 0x11){
-      HalLedSet(HAL_LED_1, HAL_LED_OFF); 
-     }
-     else if(data == 0x20){
-       HalLedSet(HAL_LED_2, HAL_LED_ON);
-     }
-     else if(data == 0x21){
-      HalLedSet(HAL_LED_2, HAL_LED_OFF);
-     }
-     else if(data == 0x30){
-       HalLedSet(HAL_LED_3, HAL_LED_ON);
-     }
-     else if(data == 0x31){
-       HalLedSet(HAL_LED_3, HAL_LED_OFF); 
-     }
-      break;
-  }
-   HalUARTWrite(HAL_UART_PORT_0,&data,1);
+void AT_App_HandleKeys( uint8 shift, uint8 keys ){
+    (void)shift;
+    if ( keys & HAL_KEY_SW_1 )
+    {
+      state = ZDP_BindReq( &addr, srcAddr, srcEP, CID, &dstAddr, dstEP,0 );
+      if(state==afStatus_SUCCESS){
+        char Buf[]="start to bind.";
+        HalUARTWrite(HAL_UART_PORT_0,Buf,len);
+      }
+      HalLedSet(HAL_LED_1, HAL_LED_ON); 
+    }
+    
+    if ( keys & HAL_KEY_SW_2 )
+    {
+      state = ZDP_UnbindReq( &addr, srcAddr, srcEP, CID, &dstAddr, dstEP,0 );
+      if(state==afStatus_SUCCESS){
+        char Buf[]="start to unbind.";
+        HalUARTWrite(HAL_UART_PORT_0,Buf,len);
+      }
+    }
 }
-

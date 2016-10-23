@@ -45,6 +45,17 @@ void AT_AF_init(void){
   afRegister( &GenericApp_epDesc );
 }
 
+GenericAF_MessageMSGCB(afIncomingMSGPacket_t *pkt){
+  switch ( pkt->clusterId ){
+  case GENERICAPP_SEND_CLUSTERID:
+    GenericApp_ReqTheMessage(pkt);
+    break;
+  case GENERICAPP_RECV_CLUSTERID:
+    GenericApp_RespTheMessage();
+    break;
+  }
+
+}
 /*********************************************************************
  * @fn      GenericApp_SendTheMessage
  *
@@ -54,45 +65,56 @@ void AT_AF_init(void){
  *
  * @return  none
  */
-void GenericApp_SendTheMessage(byte RxBuf[])
+void GenericApp_SendTheMessage(char dat)
 {
+  NODE_INFO info;
+  info.addr=NLME_GetShortAddr();
+  info.MAC=NLME_GetExtAddr();
+  info.DesMAC=NLME_GetCoordExtAddr();
+  info.ep=10;
+  info.dstep=5;
+  info.CID=1;
+  char cid;
   afAddrType_t P2P_DstAddr;
-  //P2P_DstAddr.addrMode = (afAddrMode_t)AddrBroadcast;
   P2P_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
   P2P_DstAddr.endPoint = GENERICAPP_ENDPOINT;
-  P2P_DstAddr.addr.shortAddr = 0xFFFF; //终端短地址在LCD上有显示，此处换成终端短地址就可以点播了。
-
+  P2P_DstAddr.addr.shortAddr = 0x0000; 
+ if(RxBuf[0]=='a')cid=GENERICAPP_SEND_CLUSTERID;
+ 
+ if(RxBuf[0]=='b')cid=GENERICAPP_RECV_CLUSTERID;
   afStatus_t flag = AF_DataRequest( &P2P_DstAddr, &GenericApp_epDesc,
-                       GENERICAPP_CLUSTERID,
-                       1,
-                       RxBuf,
+                       cid,
+                       sizeof(NODE_INFO),
+                       &info,
                        &GenericApp_TransID,
                        AF_DISCV_ROUTE, AF_DEFAULT_RADIUS );
-  byte buf;
-  switch(flag){
-  case afStatus_SUCCESS:
-    {buf = 0x00;
-        HalUARTWrite(0,&buf,1);
-        break;
-    }
-  case afStatus_FAILED:
-    {buf = 0x01;
-        HalUARTWrite(0,&buf,1);
-        break;
-    }
-  case afStatus_MEM_FAIL:
-    {buf = 0x02;
-        HalUARTWrite(0,&buf,1);
-        break;
-    }
-   case afStatus_INVALID_PARAMETER:
-    {buf = 0x03;
-        HalUARTWrite(0,&buf,1);
-        break;
-    }
-  }
  
 }
 
 /*********************************************************************
 *********************************************************************/
+void GenericApp_ReqTheMessage(afIncomingMSGPacket_t *pkt){
+  NODE_INFO info = (NODE_INFO*)(pkt->cmd.Data);
+   zAddrType_t dstAddr;
+  zAddrType_t addr;
+  addr.addr.shortAddr =info.addr;            
+  addr.addrMode = (afAddrMode_t)Addr16Bit;
+  state = ZDP_BindReq( &addr, info.MAC, info.ep,info.CID, info.DesMAC, info.dstep,0 );
+      if(state==afStatus_SUCCESS){
+        char Buf[]="start to bind.";
+        HalUARTWrite(HAL_UART_PORT_0,Buf,len);
+      }
+}
+
+void GenericApp_RespTheMessage(afIncomingMSGPacket_t *pkt){
+  NODE_INFO info = (NODE_INFO*)(pkt->cmd.Data);
+  zAddrType_t dstAddr;
+  zAddrType_t addr;
+  addr.addr.shortAddr =info.addr;            
+  addr.addrMode = (afAddrMode_t)Addr16Bit;
+  state = ZDP_UnbindReq( &addr, info.MAC, info.ep,info.CID, info.DesMAC, info.dstep,0 );
+      if(state==afStatus_SUCCESS){
+        char Buf[]="start to unbind.";
+        HalUARTWrite(HAL_UART_PORT_0,Buf,len);
+      }
+}

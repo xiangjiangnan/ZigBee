@@ -3,7 +3,7 @@
 #include "AT_UART.h"
 #include "OnBoard.h"
 
-byte RxBuf[81];
+char dat;
 
 void rxCB(uint8 port,uint8 event);
 
@@ -24,13 +24,12 @@ halUARTCfg_t uartConfig;
   HalUARTOpen (HAL_UART_PORT_0, &uartConfig); 
 }
 void rxCB(uint8 port,uint8 event){
-  if(event& HAL_UART_RX_TIMEOUT){
-      uint8 len = HalUARTRead(port, RxBuf,80);
+      uint8 len = HalUARTRead(port, &dat,1);
       if(len){
-      GenericApp_SendTheMessage(RxBuf);
+      GenericApp_SendTheMessage(dat);
       HalUARTWrite(port,RxBuf,len);
       len = 0;
       }
-  }
+      
 }
 
