@@ -1,0 +1,251 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         26/Oct/2016  20:49:43 #
+# Copyright 2004-2011 IAR Systems AB.                                         #
+#                                                                             #
+#    Core               =  plain                                              #
+#    Code model         =  banked                                             #
+#    Data model         =  large                                              #
+#    Calling convention =  xdata reentrant                                    #
+#    Constant location  =  data_rom                                           #
+#    Dptr setup         =  1,16                                               #
+#    Source file        =  C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\UART.c                    #
+#    Command line       =  -f C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\ #
+#                          Samples\GenericApp\CC2530DB\..\..\..\Tools\CC2530D #
+#                          B\f8wCoord.cfg (-DCPU32MHZ -DROOT=__near_func      #
+#                          -DMAC_CFG_APP_PENDING_QUEUE=TRUE                   #
+#                          -DMAC_CFG_TX_DATA_MAX=5 -DMAC_CFG_TX_MAX=8         #
+#                          -DMAC_CFG_RX_MAX=5 -DZDO_COORDINATOR -DRTR_NWK)    #
+#                          -f C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\ #
+#                          Samples\GenericApp\CC2530DB\..\..\..\Tools\CC2530D #
+#                          B\f8wConfig.cfg (-DZIGBEEPRO -DSECURE=0            #
+#                          -DZG_SECURE_DYNAMIC=0 -DREFLECTOR                  #
+#                          -DDEFAULT_CHANLIST=0x00000800                      #
+#                          -DZDAPP_CONFIG_PAN_ID=0xFFF2                       #
+#                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_MA #
+#                          SK=0x007F -DBEACON_REQUEST_DELAY=100               #
+#                          -DBEACON_REQ_DELAY_MASK=0x00FF                     #
+#                          -DLINK_STATUS_JITTER_MASK=0x007F                   #
+#                          -DROUTE_EXPIRY_TIME=30 -DAPSC_ACK_WAIT_DURATION_PO #
+#                          LLED=3000 -DNWK_INDIRECT_MSG_TIMEOUT=7             #
+#                          -DMAX_RREQ_ENTRIES=8 -DAPSC_MAX_FRAME_RETRIES=3    #
+#                          -DNWK_MAX_DATA_RETRIES=2                           #
+#                          -DMAX_POLL_FAILURE_RETRIES=2 -DMAX_BCAST=9         #
+#                          -DAPS_MAX_GROUPS=16 -DMAX_RTG_ENTRIES=40           #
+#                          -DNWK_MAX_BINDING_ENTRIES=4                        #
+#                          -DMAX_BINDING_CLUSTER_IDS=4 "-DDEFAULT_KEY={0x01,  #
+#                          0x03, 0x05, 0x07, 0x09, 0x0B, 0x0D, 0x0F, 0x00,    #
+#                          0x02, 0x04, 0x06, 0x08, 0x0A, 0x0C, 0x0D}"         #
+#                          -DMAC_MAX_FRAME_SIZE=116                           #
+#                          -DZDNWKMGR_MIN_TRANSMISSIONS=20 "-DCONST=const     #
+#                          __code" -DGENERIC=__generic                        #
+#                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000        #
+#                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)   #
+#                          -DREJOIN_POLL_RATE=440 C:\Users\xiang\Desktop\ZBSt #
+#                          udy\Projects\zstack\Samples\GenericApp\CC2530DB\UA #
+#                          RT.c -D ZTOOL_P1 -D MT_TASK -D MT_SYS_FUNC -D      #
+#                          MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC             #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\CoordinatorEB\List\ -lA   #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\CoordinatorEB\List\       #
+#                          --diag_suppress Pe001,Pa010 -o                     #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\CoordinatorEB\Obj\ -e     #
+#                          --no_code_motion --debug --core=plain --dptr=16,1  #
+#                          --data_model=large --code_model=banked             #
+#                          --calling_convention=xdata_reentrant               #
+#                          --place_constants=data_rom --nr_virtual_regs 16    #
+#                          -I C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\ #
+#                          Samples\GenericApp\CC2530DB\ -I                    #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\Source\ -I             #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\ZMain\TI2530DB\  #
+#                          -I C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\ #
+#                          Samples\GenericApp\CC2530DB\..\..\..\..\..\Compone #
+#                          nts\hal\include\ -I C:\Users\xiang\Desktop\ZBStudy #
+#                          \Projects\zstack\Samples\GenericApp\CC2530DB\..\.. #
+#                          \..\..\..\Components\hal\target\CC2530EB\ -I       #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\..\..\Components #
+#                          \mac\include\ -I C:\Users\xiang\Desktop\ZBStudy\Pr #
+#                          ojects\zstack\Samples\GenericApp\CC2530DB\..\..\.. #
+#                          \..\..\Components\mac\high_level\ -I               #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\..\..\Components #
+#                          \mac\low_level\srf04\ -I                           #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\..\..\Components #
+#                          \mac\low_level\srf04\single_chip\ -I               #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\..\..\Components #
+#                          \mt\ -I C:\Users\xiang\Desktop\ZBStudy\Projects\zs #
+#                          tack\Samples\GenericApp\CC2530DB\..\..\..\..\..\Co #
+#                          mponents\osal\include\ -I                          #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\..\..\Components #
+#                          \services\saddr\ -I C:\Users\xiang\Desktop\ZBStudy #
+#                          \Projects\zstack\Samples\GenericApp\CC2530DB\..\.. #
+#                          \..\..\..\Components\services\sdata\ -I            #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\..\..\Components #
+#                          \stack\af\ -I C:\Users\xiang\Desktop\ZBStudy\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\stack\nwk\ -I                       #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\..\..\Components #
+#                          \stack\sapi\ -I C:\Users\xiang\Desktop\ZBStudy\Pro #
+#                          jects\zstack\Samples\GenericApp\CC2530DB\..\..\..\ #
+#                          ..\..\Components\stack\sec\ -I                     #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\..\..\Components #
+#                          \stack\sys\ -I C:\Users\xiang\Desktop\ZBStudy\Proj #
+#                          ects\zstack\Samples\GenericApp\CC2530DB\..\..\..\. #
+#                          .\..\Components\stack\zdo\ -I                      #
+#                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\..\..\..\..\..\Components #
+#                          \zmac\ -I C:\Users\xiang\Desktop\ZBStudy\Projects\ #
+#                          zstack\Samples\GenericApp\CC2530DB\..\..\..\..\..\ #
+#                          Components\zmac\f8w\ -Ohz --require_prototypes     #
+#    List file          =  C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\CoordinatorEB\List\UART.l #
+#                          st                                                 #
+#    Object file        =  C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Sam #
+#                          ples\GenericApp\CC2530DB\CoordinatorEB\Obj\UART.r5 #
+#                          1                                                  #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Samples\GenericApp\CC2530DB\UART.c
+      1          #include "ZComDef.h"
+      2          #include "hal_uart.h"
+      3          #include "UART.h"
+      4          
+      5          
+      6          /***************************************************************************************************
+      7           *                                          LOCAL FUNCTIONS
+      8           ***************************************************************************************************/
+      9          
+     10          /***************************************************************************************************
+     11           * @fn      MT_UartInit
+     12           *
+     13           * @brief   Initialize MT with UART support
+     14           *
+     15           * @param   None
+     16           *
+     17           * @return  None
+     18          ***************************************************************************************************/
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+     19          void GenericApp_UartInit (){
+   \                     GenericApp_UartInit:
+   \   000000   C082         PUSH    DPL
+   \   000002   C083         PUSH    DPH
+   \   000004                ; Saved register size: 2
+   \   000004                ; Auto size: 29
+   \   000004   74E3         MOV     A,#-0x1d
+   \   000006   12....       LCALL   ?ALLOC_XSTACK8
+     20            halUARTCfg_t uartConfig;
+     21          
+     22            /* UART Configuration */
+     23            uartConfig.configured           = TRUE;
+   \   000009   85..82       MOV     DPL,?XSP + 0
+   \   00000C   85..83       MOV     DPH,?XSP + 1
+   \   00000F   7401         MOV     A,#0x1
+   \   000011   F0           MOVX    @DPTR,A
+     24            uartConfig.baudRate             = HAL_UART_BR_115200;
+   \   000012   12....       LCALL   ?XSTACK_DISP0_8
+   \   000015   7404         MOV     A,#0x4
+   \   000017   F0           MOVX    @DPTR,A
+     25            uartConfig.flowControl          = FALSE;
+   \   000018   7402         MOV     A,#0x2
+   \   00001A   12....       LCALL   ?XSTACK_DISP0_8
+   \   00001D   E4           CLR     A
+   \   00001E   F0           MOVX    @DPTR,A
+     26            uartConfig.flowControlThreshold = 64;
+   \   00001F   7403         MOV     A,#0x3
+   \   000021   12....       LCALL   ?XSTACK_DISP0_8
+   \   000024   7440         MOV     A,#0x40
+   \   000026   F0           MOVX    @DPTR,A
+   \   000027   A3           INC     DPTR
+   \   000028   E4           CLR     A
+   \   000029   F0           MOVX    @DPTR,A
+     27            uartConfig.rx.maxBufSize        = 128;
+   \   00002A   740A         MOV     A,#0xa
+   \   00002C   12....       LCALL   ?XSTACK_DISP0_8
+   \   00002F   7480         MOV     A,#-0x80
+   \   000031   F0           MOVX    @DPTR,A
+   \   000032   A3           INC     DPTR
+   \   000033   E4           CLR     A
+   \   000034   F0           MOVX    @DPTR,A
+     28            uartConfig.tx.maxBufSize        = 128;
+   \   000035   7412         MOV     A,#0x12
+   \   000037   12....       LCALL   ?XSTACK_DISP0_8
+   \   00003A   7480         MOV     A,#-0x80
+   \   00003C   F0           MOVX    @DPTR,A
+   \   00003D   A3           INC     DPTR
+   \   00003E   E4           CLR     A
+   \   00003F   F0           MOVX    @DPTR,A
+     29            uartConfig.idleTimeout          = 6;
+   \   000040   7405         MOV     A,#0x5
+   \   000042   12....       LCALL   ?XSTACK_DISP0_8
+   \   000045   7406         MOV     A,#0x6
+   \   000047   F0           MOVX    @DPTR,A
+     30            uartConfig.intEnable            = TRUE;
+   \   000048   7416         MOV     A,#0x16
+   \   00004A   12....       LCALL   ?XSTACK_DISP0_8
+   \   00004D   7401         MOV     A,#0x1
+   \   00004F   F0           MOVX    @DPTR,A
+     31            uartConfig.callBackFunc         = NULL;
+   \   000050   741B         MOV     A,#0x1b
+   \   000052   12....       LCALL   ?XSTACK_DISP0_8
+   \   000055   E4           CLR     A
+   \   000056   F0           MOVX    @DPTR,A
+   \   000057   A3           INC     DPTR
+   \   000058   F0           MOVX    @DPTR,A
+     32            HalUARTOpen (HAL_UART_PORT_0, &uartConfig);
+   \   000059                ; Setup parameters for call to function HalUARTOpen
+   \   000059   85..82       MOV     DPL,?XSP + 0
+   \   00005C   85..83       MOV     DPH,?XSP + 1
+   \   00005F   AA82         MOV     R2,DPL
+   \   000061   AB83         MOV     R3,DPH
+   \   000063   F9           MOV     R1,A
+   \   000064   12....       LCALL   ??HalUARTOpen?relay
+     33          }
+   \   000067   741D         MOV     A,#0x1d
+   \   000069   12....       LCALL   ?DEALLOC_XSTACK8
+   \   00006C   D083         POP     DPH
+   \   00006E   D082         POP     DPL
+   \   000070   02....       LJMP    ?BRET
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??GenericApp_UartInit?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    GenericApp_UartInit
+
+   Maximum stack usage in bytes:
+
+     Function            ISTACK PSTACK XSTACK
+     --------            ------ ------ ------
+     GenericApp_UartInit     2      0     29
+       -> HalUARTOpen        4      0     58
+
+
+   Segment part sizes:
+
+     Function/Label              Bytes
+     --------------              -----
+     GenericApp_UartInit          115
+     ??GenericApp_UartInit?relay    6
+
+ 
+ 115 bytes in segment BANKED_CODE
+   6 bytes in segment BANK_RELAYS
+ 
+ 121 bytes of CODE memory
+
+Errors: none
+Warnings: none
