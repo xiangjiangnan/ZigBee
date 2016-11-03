@@ -22,7 +22,7 @@
   its documentation for any purpose.
 
   YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-  PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, 
+  PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, 
   INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE, 
   NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
   TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -56,7 +56,7 @@ extern "C"
 
 // These constants are only for example and should be changed to the
 // device's needs
-#define GENERICAPP_ENDPOINT           10
+#define GENERICAPP_ENDPOINT           11
 
 #define GENERICAPP_PROFID             0x0F04
 #define GENERICAPP_DEVICEID           0x0001
@@ -72,8 +72,11 @@ extern "C"
 // Application Events (OSAL) - These are bit weighted definitions.
 #define GENERICAPP_SEND_MSG_EVT       0x0001
 
+#define GENERICAPP_SEND_BINDMSG_TIMEOUT   5000
+#define GENERICAPP_SEND_BINDMSG_EVT       0x0002
+  
 #if defined( IAR_ARMCM3_LM )
-#define GENERICAPP_RTOS_MSG_EVT       0x0002
+#define GENERICAPP_RTOS_MSG_EVT       0x0003
 #endif  
 
 /*********************************************************************

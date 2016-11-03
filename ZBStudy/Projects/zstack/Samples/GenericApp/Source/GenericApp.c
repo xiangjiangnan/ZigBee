@@ -123,7 +123,7 @@ static void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg );
 static void GenericApp_HandleKeys( byte shift, byte keys );
 static void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pckt );
 static void GenericApp_SendTheMessage( void );
-
+static void GenericApp_SendBindMessage( void );
 /*********************************************************************
  * PUBLIC FUNCTIONS
  */
@@ -156,9 +156,9 @@ void GenericApp_Init( uint8 task_id )
   GenericApp_NwkState = DEV_INIT;
   GenericApp_TransID = 0;
 
-  GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
-  GenericApp_DstAddr.endPoint = 10;
-  GenericApp_DstAddr.addr.shortAddr = 0;
+  //GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
+  //GenericApp_DstAddr.endPoint = 10;
+  //GenericApp_DstAddr.addr.shortAddr = 0;
 
   // Fill out the endpoint description.
   GenericApp_epDesc.endPoint = GENERICAPP_ENDPOINT;
@@ -219,10 +219,10 @@ uint16 GenericApp_ProcessEvent( uint8 task_id, uint16 events )
               (GenericApp_NwkState == DEV_ROUTER)
               || (GenericApp_NwkState == DEV_END_DEVICE) )
           {
-            // Start sending "the" message in a regular interval.
-            osal_start_timerEx( GenericApp_TaskID,
-                                GENERICAPP_SEND_MSG_EVT,
-                                GENERICAPP_SEND_MSG_TIMEOUT );
+             //Start sending "the" message in a regular interval.
+            //osal_start_timerEx( GenericApp_TaskID,
+              //                  GENERICAPP_SEND_MSG_EVT,
+              //                 GENERICAPP_SEND_MSG_TIMEOUT );
           }
           break;
 
@@ -254,9 +254,21 @@ uint16 GenericApp_ProcessEvent( uint8 task_id, uint16 events )
                         GENERICAPP_SEND_MSG_TIMEOUT );
 
     // return unprocessed events
-    return (events ^ GENERICAPP_SEND_MSG_EVT);
+    return (events ^ GENERICAPP_SEND_BINDMSG_EVT);
   }
+  if ( events & GENERICAPP_SEND_BINDMSG_EVT )
+  {
+    // Send "the" bind message
+    GenericApp_SendBindMessage();
 
+    // Setup to send message again
+    osal_start_timerEx( GenericApp_TaskID,
+                        GENERICAPP_SEND_BINDMSG_EVT,
+                        GENERICAPP_SEND_BINDMSG_TIMEOUT );
+
+    // return unprocessed events
+    return (events ^ GENERICAPP_SEND_BINDMSG_EVT);
+  }
   // Discard unknown events
   return 0;
 }
@@ -281,16 +293,10 @@ static void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg )
     case End_Device_Bind_rsp:
       if ( ZDO_ParseBindRsp( inMsg ) == ZSuccess )
       {
-        // Light LED
-        HalLedSet( HAL_LED_4, HAL_LED_MODE_ON );
+          osal_start_timerEx( GenericApp_TaskID,
+                                GENERICAPP_SEND_BINDMSG_EVT,
+                                GENERICAPP_SEND_BINDMSG_TIMEOUT );
       }
-#if defined( BLINK_LEDS )
-      else
-      {
-        // Flash LED to show failure
-        HalLedSet ( HAL_LED_4, HAL_LED_MODE_FLASH );
-      }
-#endif
       break;
 
     case Match_Desc_rsp:
@@ -307,6 +313,7 @@ static void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg )
 
             // Light LED
             HalLedSet( HAL_LED_4, HAL_LED_MODE_ON );
+            
           }
           osal_mem_free( pRsp );
         }
@@ -339,33 +346,15 @@ static void GenericApp_HandleKeys( uint8 shift, uint8 keys )
     if ( keys & HAL_KEY_SW_1 )
     {
     }
-    if ( keys & HAL_KEY_SW_2 )
-    {
-    }
-    if ( keys & HAL_KEY_SW_3 )
-    {
-    }
-    if ( keys & HAL_KEY_SW_4 )
-    {
-    }
   }
   else
   {
-    if ( keys & HAL_KEY_SW_1 )
+    if ( keys & HAL_KEY_SW_1 )//s2
     {
-      // Since SW1 isn't used for anything else in this application...
-#if defined( SWITCH1_BIND )
-      // we can use SW1 to simulate SW2 for devices that only have one switch,
-      keys |= HAL_KEY_SW_2;
-#elif defined( SWITCH1_MATCH )
-      // or use SW1 to simulate SW4 for devices that only have one switch
-      keys |= HAL_KEY_SW_4;
-#endif
-    }
-
-    if ( keys & HAL_KEY_SW_2 )
-    {
-      HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
+      HalLedSet ( HAL_LED_1, HAL_LED_MODE_TOGGLE );
+      GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
+      GenericApp_DstAddr.endPoint = 10;
+      GenericApp_DstAddr.addr.shortAddr = 0;
 
       // Initiate an End Device Bind Request for the mandatory endpoint
       dstAddr.addrMode = Addr16Bit;
@@ -378,11 +367,7 @@ static void GenericApp_HandleKeys( uint8 shift, uint8 keys )
                             FALSE );
     }
 
-    if ( keys & HAL_KEY_SW_3 )
-    {
-    }
-
-    if ( keys & HAL_KEY_SW_4 )
+ /*   if ( keys & HAL_KEY_SW_4 )
     {
       HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
       // Initiate a Match Description Request (Service Discovery)
@@ -394,6 +379,7 @@ static void GenericApp_HandleKeys( uint8 shift, uint8 keys )
                         GENERICAPP_MAX_CLUSTERS, (cId_t *)GenericApp_ClusterList,
                         FALSE );
     }
+    */
   }
 }
 
@@ -414,11 +400,14 @@ static void GenericApp_HandleKeys( uint8 shift, uint8 keys )
  */
 static void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 {
+  static uint8 num=0;
   switch ( pkt->clusterId )
   {
     case GENERICAPP_CLUSTERID:
        // HalUARTWrite(0,pkt->cmd.Data,pkt->cmd.DataLength+1);
-        HalUARTWrite(0,"OK",3);
+        HalUARTWrite(0,&num,1);
+        num++;
+        //HalUARTWrite(0,"OK",2);
         HalLedSet (HAL_LED_1, HAL_LED_MODE_TOGGLE);
       break;
   }
@@ -436,7 +425,9 @@ static void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 static void GenericApp_SendTheMessage( void )
 {
   uint8 dat[] = "Hello World";
-
+  GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
+  GenericApp_DstAddr.endPoint = 10;
+  GenericApp_DstAddr.addr.shortAddr = 0;
   if ( AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
                        GENERICAPP_CLUSTERID,
                        sizeof(dat) + 1,
@@ -444,7 +435,7 @@ static void GenericApp_SendTheMessage( void )
                        &GenericApp_TransID,
                        AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
   {
-   HalLedSet (HAL_LED_1, HAL_LED_MODE_TOGGLE);
+   HalLedSet (HAL_LED_2, HAL_LED_MODE_TOGGLE);
   }
   else
   {
@@ -452,3 +443,16 @@ static void GenericApp_SendTheMessage( void )
   }
 }
 
+static void GenericApp_SendBindMessage( void )
+{
+  uint8 dat[] = "Hi";
+      GenericApp_DstAddr.addrMode = (afAddrMode_t)AddrNotPresent;
+      GenericApp_DstAddr.endPoint = 11;
+      GenericApp_DstAddr.addr.shortAddr = 0;
+      AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
+                       GENERICAPP_CLUSTERID,
+                       sizeof(dat) + 1,
+                       (uint8 *)&dat,
+                       &GenericApp_TransID,
+                       AF_DISCV_ROUTE, AF_DEFAULT_RADIUS );
+}
