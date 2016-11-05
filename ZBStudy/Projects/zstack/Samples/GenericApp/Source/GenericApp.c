@@ -173,6 +173,7 @@ void GenericApp_Init( uint8 task_id )
   // Register for all key events - This app will handle all key events
   RegisterForKeys( GenericApp_TaskID );
   GenericApp_UartInit ();
+  NLME_PermitJoiningRequest(0);
   ZDO_RegisterForZDOMsg( GenericApp_TaskID, End_Device_Bind_rsp );
   ZDO_RegisterForZDOMsg( GenericApp_TaskID, Match_Desc_rsp );
 }
@@ -351,6 +352,7 @@ static void GenericApp_HandleKeys( uint8 shift, uint8 keys )
   {
     if ( keys & HAL_KEY_SW_1 )//s2
     {
+      NLME_PermitJoiningRequest(60);
       HalLedSet ( HAL_LED_1, HAL_LED_MODE_TOGGLE );
       GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
       GenericApp_DstAddr.endPoint = 10;
