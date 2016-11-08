@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        24/Oct/2016  22:06:24 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        08/Nov/2016  11:39:02 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -9,17 +9,17 @@
 //    Calling convention =  xdata reentrant                                   /
 //    Constant location  =  data_rom                                          /
 //    Dptr setup         =  1,16                                              /
-//    Source file        =  C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\Source\OSAL_SampleSw.c  /
-//    Command line       =  -f C:\Users\xiang\Desktop\ZBStudy\Projects\zstack /
-//                          \HomeAutomation\SampleSwitch\CC2530DB\..\..\..\To /
-//                          ols\CC2530DB\f8wRouter.cfg (-DCPU32MHZ            /
+//    Source file        =  E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\Source\OSAL_SampleSw.c      /
+//    Command line       =  -f E:\gitshell\ZigBee\ZBStudy\Projects\zstack\Hom /
+//                          eAutomation\SampleSwitch\CC2530DB\..\..\..\Tools\ /
+//                          CC2530DB\f8wRouter.cfg (-DCPU32MHZ                /
 //                          -DROOT=__near_func -DMAC_CFG_APP_PENDING_QUEUE=TR /
 //                          UE -DMAC_CFG_TX_DATA_MAX=5 -DMAC_CFG_TX_MAX=8     /
 //                          -DMAC_CFG_RX_MAX=5 -DRTR_NWK) -f                  /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\Tools /
-//                          \CC2530DB\f8wConfig.cfg (-DZIGBEEPRO -DSECURE=0   /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\Tools\CC2 /
+//                          530DB\f8wConfig.cfg (-DZIGBEEPRO -DSECURE=0       /
 //                          -DZG_SECURE_DYNAMIC=0 -DREFLECTOR                 /
 //                          -DDEFAULT_CHANLIST=0x00000800                     /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF2                      /
@@ -43,9 +43,9 @@
 //                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000       /
 //                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100   /
 //                          -DREJOIN_POLL_RATE=440) -f                        /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\Tools /
-//                          \CC2530DB\f8wZCL.cfg (-DZCL_READ -DZCL_WRITE      /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\Tools\CC2 /
+//                          530DB\f8wZCL.cfg (-DZCL_READ -DZCL_WRITE          /
 //                          -DZCL_BASIC -DZCL_IDENTIFY -DZCL_ON_OFF           /
 //                          -DZCL_KEY_ESTABLISH -DZCL_KEY_ESTABLISHMENT_KEY_G /
 //                          ENERATE_TIMEOUT=4 -DZCL_KEY_ESTABLISHMENT_MAC_GEN /
@@ -53,90 +53,86 @@
 //                          ERATE_TIMEOUT=10 -DZCL_LOAD_CONTROL               /
 //                          -DZCL_SIMPLE_METERING -DZCL_PRICING               /
 //                          -DZCL_MESSAGE -DZCL_TUNNELING -DZCL_TOU)          /
-//                          -DZCL_DEVICE_MGMT C:\Users\xiang\Desktop\ZBStudy\ /
-//                          Projects\zstack\HomeAutomation\SampleSwitch\Sourc /
-//                          e\OSAL_SampleSw.c -D ZTOOL_P1 -D MT_TASK -D       /
+//                          -DZCL_DEVICE_MGMT E:\gitshell\ZigBee\ZBStudy\Proj /
+//                          ects\zstack\HomeAutomation\SampleSwitch\Source\OS /
+//                          AL_SampleSw.c -D ZTOOL_P1 -D MT_TASK -D           /
 //                          MT_APP_FUNC -D MT_SYS_FUNC -D MT_ZDO_FUNC -D      /
 //                          LCD_SUPPORTED=DEBUG -lC                           /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\RouterEB\List\     /
+//                          -lA E:\gitshell\ZigBee\ZBStudy\Projects\zstack\Ho /
 //                          meAutomation\SampleSwitch\CC2530DB\RouterEB\List\ /
-//                           -lA C:\Users\xiang\Desktop\ZBStudy\Projects\zsta /
-//                          ck\HomeAutomation\SampleSwitch\CC2530DB\RouterEB\ /
-//                          List\ --diag_suppress Pe001,Pa010 -o              /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\RouterEB\Obj\  /
-//                          -e --no_code_motion --debug --core=plain          /
+//                           --diag_suppress Pe001,Pa010 -o                   /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\RouterEB\Obj\ -e   /
+//                          --no_code_motion --debug --core=plain             /
 //                          --dptr=16,1 --data_model=large                    /
 //                          --code_model=banked --calling_convention=xdata_re /
 //                          entrant --place_constants=data_rom                /
 //                          --nr_virtual_regs 16 -I                           /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\ -I            /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\Source\ -I  /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\Source\  /
-//                          -I C:\Users\xiang\Desktop\ZBStudy\Projects\zstack /
-//                          \HomeAutomation\SampleSwitch\CC2530DB\..\..\..\ZM /
-//                          ain\TI2530DB\ -I C:\Users\xiang\Desktop\ZBStudy\P /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\ -I                /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\Source\ -I      /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\Source\ -I   /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\ZMain\TI2 /
+//                          530DB\ -I E:\gitshell\ZigBee\ZBStudy\Projects\zst /
+//                          ack\HomeAutomation\SampleSwitch\CC2530DB\..\..\.. /
+//                          \..\..\Components\hal\include\ -I                 /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\hal\target\CC2530EB\ -I                   /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\mac\include\ -I                           /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\mac\high_level\ -I                        /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\mac\low_level\srf04\ -I                   /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\mac\low_level\srf04\single_chip\ -I       /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\mt\ -I E:\gitshell\ZigBee\ZBStudy\Project /
+//                          s\zstack\HomeAutomation\SampleSwitch\CC2530DB\..\ /
+//                          ..\..\..\..\Components\osal\include\ -I           /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\services\saddr\ -I                        /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\services\sdata\ -I                        /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\stack\af\ -I E:\gitshell\ZigBee\ZBStudy\P /
 //                          rojects\zstack\HomeAutomation\SampleSwitch\CC2530 /
-//                          DB\..\..\..\..\..\Components\hal\include\ -I      /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\hal\target\CC2530EB\ -I               /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\mac\include\ -I                       /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\mac\high_level\ -I                    /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\mac\low_level\srf04\ -I               /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\mac\low_level\srf04\single_chip\ -I   /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\mt\ -I C:\Users\xiang\Desktop\ZBStudy /
+//                          DB\..\..\..\..\..\Components\stack\nwk\ -I        /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\stack\sapi\ -I E:\gitshell\ZigBee\ZBStudy /
 //                          \Projects\zstack\HomeAutomation\SampleSwitch\CC25 /
-//                          30DB\..\..\..\..\..\Components\osal\include\ -I   /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\services\saddr\ -I                    /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\services\sdata\ -I                    /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\stack\af\ -I                          /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\stack\nwk\ -I                         /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\stack\sapi\ -I                        /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\stack\sec\ -I                         /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\stack\sys\ -I                         /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\stack\zcl\ -I                         /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\stack\zdo\ -I                         /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\..\..\..\..\.. /
-//                          \Components\zmac\ -I C:\Users\xiang\Desktop\ZBStu /
-//                          dy\Projects\zstack\HomeAutomation\SampleSwitch\CC /
-//                          2530DB\..\..\..\..\..\Components\zmac\f8w\ -Ohz   /
-//                          --require_prototypes                              /
-//    List file          =  C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleSwitch\CC2530DB\RouterEB\List\ /
-//                          OSAL_SampleSw.s51                                 /
+//                          30DB\..\..\..\..\..\Components\stack\sec\ -I      /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\stack\sys\ -I E:\gitshell\ZigBee\ZBStudy\ /
+//                          Projects\zstack\HomeAutomation\SampleSwitch\CC253 /
+//                          0DB\..\..\..\..\..\Components\stack\zcl\ -I       /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\stack\zdo\ -I E:\gitshell\ZigBee\ZBStudy\ /
+//                          Projects\zstack\HomeAutomation\SampleSwitch\CC253 /
+//                          0DB\..\..\..\..\..\Components\zmac\ -I            /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\..\..\..\..\..\Com /
+//                          ponents\zmac\f8w\ -Ohz --require_prototypes       /
+//    List file          =  E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleSwitch\CC2530DB\RouterEB\List\OSAL /
+//                          _SampleSw.s51                                     /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -438,7 +434,7 @@ osalInitTasks       SYMBOL "osalInitTasks"
         EXTERN ??zcl_event_loop?relay
         FUNCTION ??zcl_event_loop?relay,00H
 
-// C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\HomeAutomation\SampleSwitch\Source\OSAL_SampleSw.c
+// E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAutomation\SampleSwitch\Source\OSAL_SampleSw.c
 //    1 /**************************************************************************************************
 //    2   Filename:       OSAL_SampleSw.c
 //    3   Revised:        $Date: 2008-02-07 12:10:00 -0800 (Thu, 07 Feb 2008) $

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        24/Oct/2016  22:04:03 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        08/Nov/2016  11:23:23 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -9,18 +9,18 @@
 //    Calling convention =  xdata reentrant                                   /
 //    Constant location  =  data_rom                                          /
 //    Dptr setup         =  1,16                                              /
-//    Source file        =  C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\Source\zcl_samplelight_d /
-//                          ata.c                                             /
-//    Command line       =  -f C:\Users\xiang\Desktop\ZBStudy\Projects\zstack /
-//                          \HomeAutomation\SampleLight\CC2530DB\..\..\..\Too /
-//                          ls\CC2530DB\f8wRouter.cfg (-DCPU32MHZ             /
+//    Source file        =  E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\Source\zcl_samplelight /
+//                          _data.c                                           /
+//    Command line       =  -f E:\gitshell\ZigBee\ZBStudy\Projects\zstack\Hom /
+//                          eAutomation\SampleCoordinator\CC2530DB\..\..\..\T /
+//                          ools\CC2530DB\f8wRouter.cfg (-DCPU32MHZ           /
 //                          -DROOT=__near_func -DMAC_CFG_APP_PENDING_QUEUE=TR /
 //                          UE -DMAC_CFG_TX_DATA_MAX=5 -DMAC_CFG_TX_MAX=8     /
 //                          -DMAC_CFG_RX_MAX=5 -DRTR_NWK) -f                  /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\Tools\ /
-//                          CC2530DB\f8wConfig.cfg (-DZIGBEEPRO -DSECURE=0    /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\Tool /
+//                          s\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO -DSECURE=0  /
 //                          -DZG_SECURE_DYNAMIC=0 -DREFLECTOR                 /
 //                          -DDEFAULT_CHANLIST=0x00000800                     /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF2                      /
@@ -44,9 +44,9 @@
 //                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000       /
 //                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100   /
 //                          -DREJOIN_POLL_RATE=440) -f                        /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\Tools\ /
-//                          CC2530DB\f8wZCL.cfg (-DZCL_READ -DZCL_WRITE       /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\Tool /
+//                          s\CC2530DB\f8wZCL.cfg (-DZCL_READ -DZCL_WRITE     /
 //                          -DZCL_BASIC -DZCL_IDENTIFY -DZCL_ON_OFF           /
 //                          -DZCL_KEY_ESTABLISH -DZCL_KEY_ESTABLISHMENT_KEY_G /
 //                          ENERATE_TIMEOUT=4 -DZCL_KEY_ESTABLISHMENT_MAC_GEN /
@@ -54,90 +54,90 @@
 //                          ERATE_TIMEOUT=10 -DZCL_LOAD_CONTROL               /
 //                          -DZCL_SIMPLE_METERING -DZCL_PRICING               /
 //                          -DZCL_MESSAGE -DZCL_TUNNELING -DZCL_TOU)          /
-//                          -DZCL_DEVICE_MGMT C:\Users\xiang\Desktop\ZBStudy\ /
-//                          Projects\zstack\HomeAutomation\SampleLight\Source /
-//                          \zcl_samplelight_data.c -D ZTOOL_P1 -D MT_TASK    /
+//                          -DZCL_DEVICE_MGMT E:\gitshell\ZigBee\ZBStudy\Proj /
+//                          ects\zstack\HomeAutomation\SampleCoordinator\Sour /
+//                          ce\zcl_samplelight_data.c -D ZTOOL_P1 -D MT_TASK  /
 //                          -D MT_APP_FUNC -D MT_SYS_FUNC -D MT_ZDO_FUNC -D   /
 //                          LCD_SUPPORTED=DEBUG -lC                           /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\RouterEB\List\  /
-//                          -lA C:\Users\xiang\Desktop\ZBStudy\Projects\zstac /
-//                          k\HomeAutomation\SampleLight\CC2530DB\RouterEB\Li /
-//                          st\ --diag_suppress Pe001,Pa010 -o                /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\RouterEB\Obj\   /
-//                          -e --no_code_motion --debug --core=plain          /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\RouterEB\List /
+//                          \ -lA E:\gitshell\ZigBee\ZBStudy\Projects\zstack\ /
+//                          HomeAutomation\SampleCoordinator\CC2530DB\RouterE /
+//                          B\List\ --diag_suppress Pe001,Pa010 -o            /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\RouterEB\Obj\ /
+//                           -e --no_code_motion --debug --core=plain         /
 //                          --dptr=16,1 --data_model=large                    /
 //                          --code_model=banked --calling_convention=xdata_re /
 //                          entrant --place_constants=data_rom                /
 //                          --nr_virtual_regs 16 -I                           /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\ -I             /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\Source\ -I   /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\Source\   /
-//                          -I C:\Users\xiang\Desktop\ZBStudy\Projects\zstack /
-//                          \HomeAutomation\SampleLight\CC2530DB\..\..\..\ZMa /
-//                          in\TI2530DB\ -I C:\Users\xiang\Desktop\ZBStudy\Pr /
-//                          ojects\zstack\HomeAutomation\SampleLight\CC2530DB /
-//                          \..\..\..\..\..\Components\hal\include\ -I        /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\hal\target\CC2530EB\ -I                /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\mac\include\ -I                        /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\mac\high_level\ -I                     /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\mac\low_level\srf04\ -I                /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\mac\low_level\srf04\single_chip\ -I    /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\mt\ -I C:\Users\xiang\Desktop\ZBStudy\ /
-//                          Projects\zstack\HomeAutomation\SampleLight\CC2530 /
-//                          DB\..\..\..\..\..\Components\osal\include\ -I     /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\services\saddr\ -I                     /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\services\sdata\ -I                     /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\stack\af\ -I                           /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\stack\nwk\ -I                          /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\stack\sapi\ -I                         /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\stack\sec\ -I                          /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\stack\sys\ -I                          /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\stack\zcl\ -I                          /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\stack\zdo\ -I                          /
-//                          C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\..\..\..\..\..\ /
-//                          Components\zmac\ -I C:\Users\xiang\Desktop\ZBStud /
-//                          y\Projects\zstack\HomeAutomation\SampleLight\CC25 /
-//                          30DB\..\..\..\..\..\Components\zmac\f8w\ -Ohz     /
-//                          --require_prototypes                              /
-//    List file          =  C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\Ho /
-//                          meAutomation\SampleLight\CC2530DB\RouterEB\List\z /
-//                          cl_samplelight_data.s51                           /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\ -I           /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\Source\    /
+//                          -I E:\gitshell\ZigBee\ZBStudy\Projects\zstack\Hom /
+//                          eAutomation\SampleCoordinator\CC2530DB\..\..\Sour /
+//                          ce\ -I E:\gitshell\ZigBee\ZBStudy\Projects\zstack /
+//                          \HomeAutomation\SampleCoordinator\CC2530DB\..\..\ /
+//                          ..\ZMain\TI2530DB\ -I E:\gitshell\ZigBee\ZBStudy\ /
+//                          Projects\zstack\HomeAutomation\SampleCoordinator\ /
+//                          CC2530DB\..\..\..\..\..\Components\hal\include\   /
+//                          -I E:\gitshell\ZigBee\ZBStudy\Projects\zstack\Hom /
+//                          eAutomation\SampleCoordinator\CC2530DB\..\..\..\. /
+//                          .\..\Components\hal\target\CC2530EB\ -I           /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\mac\include\ -I                      /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\mac\high_level\ -I                   /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\mac\low_level\srf04\ -I              /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\mac\low_level\srf04\single_chip\ -I  /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\mt\ -I E:\gitshell\ZigBee\ZBStudy\Pr /
+//                          ojects\zstack\HomeAutomation\SampleCoordinator\CC /
+//                          2530DB\..\..\..\..\..\Components\osal\include\    /
+//                          -I E:\gitshell\ZigBee\ZBStudy\Projects\zstack\Hom /
+//                          eAutomation\SampleCoordinator\CC2530DB\..\..\..\. /
+//                          .\..\Components\services\saddr\ -I                /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\services\sdata\ -I                   /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\stack\af\ -I                         /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\stack\nwk\ -I                        /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\stack\sapi\ -I                       /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\stack\sec\ -I                        /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\stack\sys\ -I                        /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\stack\zcl\ -I                        /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\stack\zdo\ -I                        /
+//                          E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\..\..\..\..\. /
+//                          .\Components\zmac\ -I E:\gitshell\ZigBee\ZBStudy\ /
+//                          Projects\zstack\HomeAutomation\SampleCoordinator\ /
+//                          CC2530DB\..\..\..\..\..\Components\zmac\f8w\      /
+//                          -Ohz --require_prototypes                         /
+//    List file          =  E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAu /
+//                          tomation\SampleCoordinator\CC2530DB\RouterEB\List /
+//                          \zcl_samplelight_data.s51                         /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -179,7 +179,7 @@
         PUBLIC zclSampleLight_PowerSource
         PUBLIC zclSampleLight_SimpleDesc
         PUBLIC zclSampleLight_ZCLVersion
-// C:\Users\xiang\Desktop\ZBStudy\Projects\zstack\HomeAutomation\SampleLight\Source\zcl_samplelight_data.c
+// E:\gitshell\ZigBee\ZBStudy\Projects\zstack\HomeAutomation\SampleCoordinator\Source\zcl_samplelight_data.c
 //    1 /**************************************************************************************************
 //    2   Filename:       zcl_samplelight_data.c
 //    3   Revised:        $Date: 2008-03-11 11:01:35 -0700 (Tue, 11 Mar 2008) $
@@ -205,7 +205,7 @@
 //   23   its documentation for any purpose.
 //   24 
 //   25   YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-//   26   PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, 
+//   26   PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, 
 //   27   INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE, 
 //   28   NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
 //   29   TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -600,23 +600,24 @@ zclSampleLight_InClusterList:
 //  215   ZCL_CLUSTER_ID_GEN_SCENES,
 //  216   ZCL_CLUSTER_ID_GEN_GROUPS,
 //  217   ZCL_CLUSTER_ID_GEN_ON_OFF,
-//  218   ZCL_CLUSTER_ID_GEN_LEVEL_CONTROL
-//  219 };
-//  220 
-//  221 #define ZCLSAMPLELIGHT_MAX_OUTCLUSTERS       1
+//  218   ZCL_CLUSTER_ID_GEN_LEVEL_CONTROL,
+//  219   
+//  220 };
+//  221 
+//  222 #define ZCLSAMPLELIGHT_MAX_OUTCLUSTERS       1
 
         RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
         DATA16
-//  222 const cId_t zclSampleLight_OutClusterList[ZCLSAMPLELIGHT_MAX_OUTCLUSTERS] =
+//  223 const cId_t zclSampleLight_OutClusterList[ZCLSAMPLELIGHT_MAX_OUTCLUSTERS] =
 zclSampleLight_OutClusterList:
         DW 0
-//  223 {
-//  224   ZCL_CLUSTER_ID_GEN_BASIC
-//  225 };
-//  226 
+//  224 {
+//  225   ZCL_CLUSTER_ID_GEN_BASIC,
+//  226 };
+//  227 
 
         RSEG XDATA_I:XDATA:NOROOT(0)
-//  227 SimpleDescriptionFormat_t zclSampleLight_SimpleDesc =
+//  228 SimpleDescriptionFormat_t zclSampleLight_SimpleDesc =
 zclSampleLight_SimpleDesc:
         DATA8
         DS 12
@@ -652,7 +653,7 @@ zclSampleLight_SimpleDesc:
         RSEG XDATA_ID:CODE:NOROOT(0)
 `?<Initializer for zclSampleLight_SimpleDesc>`:
         DATA8
-        DB 13
+        DB 20
         DATA16
         DW 260
         DW 257
@@ -667,30 +668,30 @@ zclSampleLight_SimpleDesc:
         DW zclSampleLight_OutClusterList
 
         END
-//  228 {
-//  229   SAMPLELIGHT_ENDPOINT,                  //  int Endpoint;
-//  230   ZCL_HA_PROFILE_ID,                     //  uint16 AppProfId[2];
-//  231   ZCL_HA_DEVICEID_DIMMABLE_LIGHT,        //  uint16 AppDeviceId[2];
-//  232   SAMPLELIGHT_DEVICE_VERSION,            //  int   AppDevVer:4;
-//  233   SAMPLELIGHT_FLAGS,                     //  int   AppFlags:4;
-//  234   ZCLSAMPLELIGHT_MAX_INCLUSTERS,         //  byte  AppNumInClusters;
-//  235   (cId_t *)zclSampleLight_InClusterList, //  byte *pAppInClusterList;
-//  236   ZCLSAMPLELIGHT_MAX_OUTCLUSTERS,        //  byte  AppNumInClusters;
-//  237   (cId_t *)zclSampleLight_OutClusterList //  byte *pAppInClusterList;
-//  238 };
-//  239 
-//  240 /*********************************************************************
-//  241  * GLOBAL FUNCTIONS
-//  242  */
-//  243 
-//  244 /*********************************************************************
-//  245  * LOCAL FUNCTIONS
-//  246  */
-//  247 
-//  248 /****************************************************************************
-//  249 ****************************************************************************/
-//  250 
+//  229 {
+//  230   SAMPLELIGHT_ENDPOINT,                  //  int Endpoint;
+//  231   ZCL_HA_PROFILE_ID,                     //  uint16 AppProfId[2];
+//  232   ZCL_HA_DEVICEID_DIMMABLE_LIGHT,        //  uint16 AppDeviceId[2];
+//  233   SAMPLELIGHT_DEVICE_VERSION,            //  int   AppDevVer:4;
+//  234   SAMPLELIGHT_FLAGS,                     //  int   AppFlags:4;
+//  235   ZCLSAMPLELIGHT_MAX_INCLUSTERS,         //  byte  AppNumInClusters;
+//  236   (cId_t *)zclSampleLight_InClusterList, //  byte *pAppInClusterList;
+//  237   ZCLSAMPLELIGHT_MAX_OUTCLUSTERS,        //  byte  AppNumInClusters;
+//  238   (cId_t *)zclSampleLight_OutClusterList //  byte *pAppInClusterList;
+//  239 };
+//  240 
+//  241 /*********************************************************************
+//  242  * GLOBAL FUNCTIONS
+//  243  */
+//  244 
+//  245 /*********************************************************************
+//  246  * LOCAL FUNCTIONS
+//  247  */
+//  248 
+//  249 /****************************************************************************
+//  250 ****************************************************************************/
 //  251 
+//  252 
 // 
 // 96 bytes in segment CODE_C
 // 30 bytes in segment XDATA_I

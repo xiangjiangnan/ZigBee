@@ -23,7 +23,7 @@
   its documentation for any purpose.
 
   YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-  PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, 
+  PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, 
   INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE, 
   NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
   TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -91,19 +91,12 @@ byte zclSampleLight_TaskID;
  */
 //static afAddrType_t zclSampleLight_DstAddr;
 
-#define ZCLSAMPLELIGHT_BINDINGLIST       2
-static cId_t bindingInClusters[ZCLSAMPLELIGHT_BINDINGLIST] =
-{
-  ZCL_CLUSTER_ID_GEN_ON_OFF,
-  ZCL_CLUSTER_ID_GEN_LEVEL_CONTROL
-};
-
 // Test Endpoint to allow SYS_APP_MSGs
 static endPointDesc_t sampleLight_TestEp =
 {
-  20,                                 // Test endpoint
+  SAMPLELIGHT_ENDPOINT,                                 // Test endpoint
   &zclSampleLight_TaskID,
-  (SimpleDescriptionFormat_t *)NULL,  // No Simple description for this test endpoint
+  (SimpleDescriptionFormat_t *)&zclSampleLight_SimpleDesc,  // No Simple description for this test endpoint
   (afNetworkLatencyReq_t)0            // No Network Latency req
 };
 
@@ -116,7 +109,7 @@ static void zclSampleLight_IdentifyCB( zclIdentify_t *pCmd );
 static void zclSampleLight_IdentifyQueryRspCB( zclIdentifyQueryRsp_t *pRsp );
 static void zclSampleLight_OnOffCB( uint8 cmd );
 static void zclSampleLight_ProcessIdentifyTimeChange( void );
-
+static void afSampleLight_ProcessIncomingMsg( afIncomingMSGPacket_t *pInMsg );
 // Functions to process ZCL Foundation incoming Command/Response messages 
 static void zclSampleLight_ProcessIncomingMsg( zclIncomingMsg_t *msg );
 #ifdef ZCL_READ
@@ -186,6 +179,8 @@ void zclSampleLight_Init( byte task_id )
 
   // Register for a test endpoint
   afRegister( &sampleLight_TestEp );
+  
+  NLME_PermitJoiningRequest(0);
 }
 
 /*********************************************************************
@@ -209,6 +204,9 @@ uint16 zclSampleLight_event_loop( uint8 task_id, uint16 events )
     {
       switch ( MSGpkt->hdr.event )
       {
+        case AF_INCOMING_MSG_CMD:
+          afSampleLight_ProcessIncomingMsg( (afIncomingMSGPacket_t *)MSGpkt );
+          break;
         case ZCL_INCOMING_MSG:
           // Incoming ZCL Foundation command/response messages
           zclSampleLight_ProcessIncomingMsg( (zclIncomingMsg_t *)MSGpkt );
@@ -259,30 +257,14 @@ uint16 zclSampleLight_event_loop( uint8 task_id, uint16 events )
  */
 static void zclSampleLight_HandleKeys( byte shift, byte keys )
 {
-  zAddrType_t dstAddr;
+  //zAddrType_t dstAddr;
   
   (void)shift;  // Intentionally unreferenced parameter
 
-  if ( keys & HAL_KEY_SW_2 )
+  if ( keys & HAL_KEY_SW_1 )
   {
-    // Initiate an End Device Bind Request, this bind request will
-    // only use a cluster list that is important to binding.
-    dstAddr.addrMode = afAddr16Bit;
-    dstAddr.addr.shortAddr = 0;   // Coordinator makes the match
-    ZDP_EndDeviceBindReq( &dstAddr, NLME_GetShortAddr(),
-                           SAMPLELIGHT_ENDPOINT,
-                           ZCL_HA_PROFILE_ID,
-                           ZCLSAMPLELIGHT_BINDINGLIST, bindingInClusters,
-                           0, NULL,   // No Outgoing clusters to bind
-                           TRUE );
-  }
-
-  if ( keys & HAL_KEY_SW_3 )
-  {
-  }
-
-  if ( keys & HAL_KEY_SW_4 )
-  {
+    HalLedSet( HAL_LED_1, HAL_LED_MODE_TOGGLE );
+    NLME_PermitJoiningRequest(60);
   }
 }
 
@@ -562,7 +544,16 @@ static uint8 zclSampleLight_ProcessInDiscRspCmd( zclIncomingMsg_t *pInMsg )
 }
 #endif // ZCL_DISCOVER
 
-
+static void afSampleLight_ProcessIncomingMsg( afIncomingMSGPacket_t *pInMsg ){
+  //switch ( pInMsg->clusterId ){
+  //case SAMPLE_RECEIVE_CLUSTERID:
+     HalLedSet( HAL_LED_1, HAL_LED_MODE_TOGGLE ); 
+    // break;
+     
+  // default:
+   // break;
+  //}
+}
 /****************************************************************************
 ****************************************************************************/
 

@@ -22,7 +22,7 @@
   its documentation for any purpose.
 
   YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-  PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+  PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
   INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
   NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
   TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -81,7 +81,7 @@
  * GLOBAL VARIABLES
  */
 byte zclSampleSw_TaskID;
-
+uint8 zclSampleSw_TransID;
 /*********************************************************************
  * GLOBAL FUNCTIONS
  */
@@ -90,19 +90,13 @@ byte zclSampleSw_TaskID;
  * LOCAL VARIABLES
  */
 static afAddrType_t zclSampleSw_DstAddr;
-
-#define ZCLSAMPLESW_BINDINGLIST       1
-static cId_t bindingOutClusters[ZCLSAMPLESW_BINDINGLIST] =
-{
-  ZCL_CLUSTER_ID_GEN_ON_OFF
-};
-
+static uint8 flag=0;
 // Test Endpoint to allow SYS_APP_MSGs
 static endPointDesc_t sampleSw_TestEp =
 {
-  20,                                 // Test endpoint
+  SAMPLESW_ENDPOINT,                                 // Test endpoint
   &zclSampleSw_TaskID,
-  (SimpleDescriptionFormat_t *)NULL,  // No Simple description for this test endpoint
+  (SimpleDescriptionFormat_t *)&zclSampleSw_SimpleDesc,  // No Simple description for this test endpoint
   (afNetworkLatencyReq_t)0            // No Network Latency req
 };
 
@@ -164,12 +158,7 @@ static zclGeneral_AppCallbacks_t zclSampleSw_CmdCallbacks =
 void zclSampleSw_Init( byte task_id )
 {
   zclSampleSw_TaskID = task_id;
-
-  // Set destination address to indirect
-  zclSampleSw_DstAddr.addrMode = (afAddrMode_t)AddrNotPresent;
-  zclSampleSw_DstAddr.endPoint = 0;
-  zclSampleSw_DstAddr.addr.shortAddr = 0;
-
+  zclSampleSw_TransID = 0;
   // This app is part of the Home Automation Profile
   zclHA_Init( &zclSampleSw_SimpleDesc );
 
@@ -189,7 +178,7 @@ void zclSampleSw_Init( byte task_id )
   afRegister( &sampleSw_TestEp );
 
   ZDO_RegisterForZDOMsg( zclSampleSw_TaskID, End_Device_Bind_rsp );
-  ZDO_RegisterForZDOMsg( zclSampleSw_TaskID, Match_Desc_rsp );
+  //ZDO_RegisterForZDOMsg( zclSampleSw_TaskID, Match_Desc_rsp );
 }
 
 /*********************************************************************
@@ -236,12 +225,36 @@ uint16 zclSampleSw_event_loop( uint8 task_id, uint16 events )
     // return unprocessed events
     return (events ^ SYS_EVENT_MSG);
   }
-
+  
+  if ( events & SAMPLESW_ONOFF_EVT )
+  {
+    // Set destination address to indirect
+  zclSampleSw_DstAddr.addrMode = (afAddrMode_t)AddrNotPresent;
+  zclSampleSw_DstAddr.endPoint = 13;
+  zclSampleSw_DstAddr.addr.shortAddr = 0;
+    if(!flag){
+      zclGeneral_SendOnOff_CmdOn(SAMPLESW_ENDPOINT,&zclSampleSw_DstAddr,0,1);
+      flag=1;
+    }
+    if(flag==1){
+      zclGeneral_SendOnOff_CmdOff(SAMPLESW_ENDPOINT,&zclSampleSw_DstAddr,0,1);
+      flag=0;
+    }
+    osal_start_timerEx(zclSampleSw_TaskID, SAMPLESW_ONOFF_EVT, SAMPLESW_ONOFF_TIMEOUT);
+    return ( events ^ SAMPLESW_ONOFF_EVT );
+  }
+  
   if ( events & SAMPLESW_IDENTIFY_TIMEOUT_EVT )
   {
-    zclSampleSw_IdentifyTime = 10;
-    zclSampleSw_ProcessIdentifyTimeChange();
-
+    HalLedSet( HAL_LED_1, HAL_LED_MODE_TOGGLE );
+    // Set destination address to indirect
+        uint8 buf[]="change";
+        zclSampleSw_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
+        zclSampleSw_DstAddr.endPoint = 20;
+        zclSampleSw_DstAddr.addr.shortAddr = 0;
+    AF_DataRequest(&zclSampleSw_DstAddr, &sampleSw_TestEp,
+                           SAMPLE_RECEIVE_CLUSTERID, 8, buf, &zclSampleSw_TransID,
+                           AF_DISCV_ROUTE, AF_DEFAULT_RADIUS); 
     return ( events ^ SAMPLESW_IDENTIFY_TIMEOUT_EVT );
   }
 
@@ -267,36 +280,9 @@ void zclSampleSw_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg )
       if ( ZDO_ParseBindRsp( inMsg ) == ZSuccess )
       {
         // Light LED
-        HalLedSet( HAL_LED_4, HAL_LED_MODE_ON );
+        //HalLedSet( HAL_LED_4, HAL_LED_MODE_ON );
+        osal_start_timerEx(zclSampleSw_TaskID, SAMPLESW_ONOFF_EVT, SAMPLESW_ONOFF_TIMEOUT); 
       }
-#if defined(BLINK_LEDS)
-      else
-      {
-        // Flash LED to show failure
-        HalLedSet ( HAL_LED_4, HAL_LED_MODE_FLASH );
-      }
-#endif
-      break;
-
-    case Match_Desc_rsp:
-      {
-        ZDO_ActiveEndpointRsp_t *pRsp = ZDO_ParseEPListRsp( inMsg );
-        if ( pRsp )
-        {
-          if ( pRsp->status == ZSuccess && pRsp->cnt )
-          {
-            zclSampleSw_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
-            zclSampleSw_DstAddr.addr.shortAddr = pRsp->nwkAddr;
-            // Take the first endpoint, Can be changed to search through endpoints
-            zclSampleSw_DstAddr.endPoint = pRsp->epList[0];
-
-            // Light LED
-            HalLedSet( HAL_LED_4, HAL_LED_MODE_ON );
-          }
-          osal_mem_free( pRsp );
-        }
-      }
-      break;
   }
 }
 
@@ -319,17 +305,9 @@ static void zclSampleSw_HandleKeys( byte shift, byte keys )
   zAddrType_t dstAddr;
   (void)shift;  // Intentionally unreferenced parameter
 
-  if ( keys & HAL_KEY_SW_1 )
-  {
-    // Using this as the "Light Switch"
-#ifdef ZCL_ON_OFF
-    zclGeneral_SendOnOff_CmdToggle( SAMPLESW_ENDPOINT, &zclSampleSw_DstAddr, false, 0 );
-#endif
-  }
-
   if ( keys & HAL_KEY_SW_2 )
   {
-    HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
+    //HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
 
     // Initiate an End Device Bind Request, this bind request will
     // only use a cluster list that is important to binding.
@@ -339,26 +317,9 @@ static void zclSampleSw_HandleKeys( byte shift, byte keys )
                            SAMPLESW_ENDPOINT,
                            ZCL_HA_PROFILE_ID,
                            0, NULL,   // No incoming clusters to bind
-                           ZCLSAMPLESW_BINDINGLIST, bindingOutClusters,
+                           zclSampleSw_SimpleDesc.AppNumOutClusters, 
+                           zclSampleSw_SimpleDesc.pAppOutClusterList,
                            TRUE );
-  }
-
-  if ( keys & HAL_KEY_SW_3 )
-  {
-  }
-
-  if ( keys & HAL_KEY_SW_4 )
-  {
-    HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
-
-    // Initiate a Match Description Request (Service Discovery)
-    dstAddr.addrMode = AddrBroadcast;
-    dstAddr.addr.shortAddr = NWK_BROADCAST_SHORTADDR;
-    ZDP_MatchDescReq( &dstAddr, NWK_BROADCAST_SHORTADDR,
-                       ZCL_HA_PROFILE_ID,
-                       ZCLSAMPLESW_BINDINGLIST, bindingOutClusters,
-                       0, NULL,   // No incoming clusters to bind
-                       FALSE );
   }
 }
 
@@ -375,16 +336,18 @@ static void zclSampleSw_ProcessIdentifyTimeChange( void )
 {
   if ( zclSampleSw_IdentifyTime > 0 )
   {
-    osal_start_timerEx( zclSampleSw_TaskID, SAMPLESW_IDENTIFY_TIMEOUT_EVT, 1000 );
-    HalLedBlink ( HAL_LED_4, 0xFF, HAL_LED_DEFAULT_DUTY_CYCLE, HAL_LED_DEFAULT_FLASH_TIME );
+   // osal_start_timerEx( zclSampleSw_TaskID, SAMPLESW_IDENTIFY_TIMEOUT_EVT, 1000 );
+    //HalLedBlink ( HAL_LED_4, 0xFF, HAL_LED_DEFAULT_DUTY_CYCLE, HAL_LED_DEFAULT_FLASH_TIME );
+    zclSampleSw_IdentifyTime--;
   }
   else
   {
-    if ( zclSampleSw_OnOff )
-      HalLedSet ( HAL_LED_4, HAL_LED_MODE_ON );
-    else
-      HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
-    osal_stop_timerEx( zclSampleSw_TaskID, SAMPLESW_IDENTIFY_TIMEOUT_EVT );
+    //if ( zclSampleSw_OnOff )
+     // HalLedSet ( HAL_LED_4, HAL_LED_MODE_ON );
+   // else
+     // HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
+    osal_start_timerEx( zclSampleSw_TaskID, SAMPLESW_IDENTIFY_TIMEOUT_EVT ,SAMPLESW_IDENTIFY_TIMEOUT);
+    zclSampleSw_IdentifyTime=2000; 
   }
 }
 

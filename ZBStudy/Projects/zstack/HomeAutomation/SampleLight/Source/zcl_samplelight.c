@@ -23,7 +23,7 @@
   its documentation for any purpose.
 
   YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-  PROVIDED ìAS ISî WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, 
+  PROVIDED ìAS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, 
   INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE, 
   NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
   TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -51,6 +51,7 @@
 #include "OSAL.h"
 #include "AF.h"
 #include "ZDApp.h"
+#include "ZDObject.h"
 
 #include "zcl.h"
 #include "zcl_general.h"
@@ -89,27 +90,19 @@ byte zclSampleLight_TaskID;
 /*********************************************************************
  * LOCAL VARIABLES
  */
-//static afAddrType_t zclSampleLight_DstAddr;
-
-#define ZCLSAMPLELIGHT_BINDINGLIST       2
-static cId_t bindingInClusters[ZCLSAMPLELIGHT_BINDINGLIST] =
-{
-  ZCL_CLUSTER_ID_GEN_ON_OFF,
-  ZCL_CLUSTER_ID_GEN_LEVEL_CONTROL
-};
-
 // Test Endpoint to allow SYS_APP_MSGs
 static endPointDesc_t sampleLight_TestEp =
 {
-  20,                                 // Test endpoint
+  SAMPLELIGHT_ENDPOINT,                                 // Test endpoint
   &zclSampleLight_TaskID,
-  (SimpleDescriptionFormat_t *)NULL,  // No Simple description for this test endpoint
+  (SimpleDescriptionFormat_t *)&zclSampleLight_SimpleDesc,  // No Simple description for this test endpoint
   (afNetworkLatencyReq_t)0            // No Network Latency req
 };
 
 /*********************************************************************
  * LOCAL FUNCTIONS
  */
+static void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg );
 static void zclSampleLight_HandleKeys( byte shift, byte keys );
 static void zclSampleLight_BasicResetCB( void );
 static void zclSampleLight_IdentifyCB( zclIdentify_t *pCmd );
@@ -164,11 +157,6 @@ void zclSampleLight_Init( byte task_id )
 {
   zclSampleLight_TaskID = task_id;
 
-  // Set destination address to indirect
-  //zclSampleLight_DstAddr.addrMode = (afAddrMode_t)AddrNotPresent;
-  //zclSampleLight_DstAddr.endPoint = 0;
-  //zclSampleLight_DstAddr.addr.shortAddr = 0;
-
   // This app is part of the Home Automation Profile
   zclHA_Init( &zclSampleLight_SimpleDesc );
 
@@ -186,6 +174,8 @@ void zclSampleLight_Init( byte task_id )
 
   // Register for a test endpoint
   afRegister( &sampleLight_TestEp );
+  
+  ZDO_RegisterForZDOMsg( task_id,  End_Device_Bind_rsp );
 }
 
 /*********************************************************************
@@ -209,7 +199,11 @@ uint16 zclSampleLight_event_loop( uint8 task_id, uint16 events )
     {
       switch ( MSGpkt->hdr.event )
       {
-        case ZCL_INCOMING_MSG:
+       case ZDO_CB_MSG:
+          GenericApp_ProcessZDOMsgs( (zdoIncomingMsg_t *)MSGpkt );
+          break;
+          
+       case ZCL_INCOMING_MSG:
           // Incoming ZCL Foundation command/response messages
           zclSampleLight_ProcessIncomingMsg( (zclIncomingMsg_t *)MSGpkt );
           break;
@@ -230,19 +224,26 @@ uint16 zclSampleLight_event_loop( uint8 task_id, uint16 events )
     return (events ^ SYS_EVENT_MSG);
   }
 
-  if ( events & SAMPLELIGHT_IDENTIFY_TIMEOUT_EVT )
-  {
-    if ( zclSampleLight_IdentifyTime > 0 )
-      zclSampleLight_IdentifyTime--;
-    zclSampleLight_ProcessIdentifyTimeChange();
-
-    return ( events ^ SAMPLELIGHT_IDENTIFY_TIMEOUT_EVT );
-  }
-
   // Discard unknown events
   return 0;
 }
 
+
+static void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg )
+{
+  switch ( inMsg->clusterID )
+  {
+    case End_Device_Bind_rsp:
+      if ( ZDO_ParseBindRsp( inMsg ) == ZSuccess )
+      {
+         HalLedSet ( HAL_LED_2, HAL_LED_MODE_TOGGLE );
+      }
+      break;
+      
+   default:
+    break;
+  }
+}
 /*********************************************************************
  * @fn      zclSampleLight_HandleKeys
  *
@@ -272,17 +273,10 @@ static void zclSampleLight_HandleKeys( byte shift, byte keys )
     ZDP_EndDeviceBindReq( &dstAddr, NLME_GetShortAddr(),
                            SAMPLELIGHT_ENDPOINT,
                            ZCL_HA_PROFILE_ID,
-                           ZCLSAMPLELIGHT_BINDINGLIST, bindingInClusters,
+                           zclSampleLight_SimpleDesc.AppNumInClusters, 
+                           zclSampleLight_SimpleDesc.pAppInClusterList,
                            0, NULL,   // No Outgoing clusters to bind
                            TRUE );
-  }
-
-  if ( keys & HAL_KEY_SW_3 )
-  {
-  }
-
-  if ( keys & HAL_KEY_SW_4 )
-  {
   }
 }
 
@@ -299,7 +293,7 @@ static void zclSampleLight_ProcessIdentifyTimeChange( void )
 {
   if ( zclSampleLight_IdentifyTime > 0 )
   {
-    osal_start_timerEx( zclSampleLight_TaskID, SAMPLELIGHT_IDENTIFY_TIMEOUT_EVT, 1000 );
+   // osal_start_timerEx( zclSampleLight_TaskID, SAMPLELIGHT_IDENTIFY_TIMEOUT_EVT, 1000 );
     HalLedBlink ( HAL_LED_4, 0xFF, HAL_LED_DEFAULT_DUTY_CYCLE, HAL_LED_DEFAULT_FLASH_TIME );
   }
   else
@@ -308,7 +302,7 @@ static void zclSampleLight_ProcessIdentifyTimeChange( void )
       HalLedSet ( HAL_LED_4, HAL_LED_MODE_ON );
     else
       HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
-    osal_stop_timerEx( zclSampleLight_TaskID, SAMPLELIGHT_IDENTIFY_TIMEOUT_EVT );
+   // osal_stop_timerEx( zclSampleLight_TaskID, SAMPLELIGHT_IDENTIFY_TIMEOUT_EVT );
   }
 }
 
@@ -392,9 +386,9 @@ static void zclSampleLight_OnOffCB( uint8 cmd )
 
   // In this sample app, we use LED4 to simulate the Light
   if ( zclSampleLight_OnOff == LIGHT_ON )
-    HalLedSet( HAL_LED_4, HAL_LED_MODE_ON );
+    HalLedSet( HAL_LED_1, HAL_LED_MODE_ON );// ’µΩonoff√¸¡Ó∫ÛLED1÷∏ æ
   else
-    HalLedSet( HAL_LED_4, HAL_LED_MODE_OFF );
+    HalLedSet( HAL_LED_1, HAL_LED_MODE_OFF );
 }
 
 
@@ -533,6 +527,7 @@ static uint8 zclSampleLight_ProcessInDefaultRspCmd( zclIncomingMsg_t *pInMsg )
    
   // Device is notified of the Default Response command.
   (void)pInMsg;
+ // HalLedSet ( HAL_LED_1, HAL_LED_MODE_TROGGLE );
   
   return TRUE; 
 }
